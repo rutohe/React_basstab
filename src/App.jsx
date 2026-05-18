@@ -12,7 +12,12 @@ function App() {
   const [column,setColumn] = useState({})
   const [row,setRow] = useState([])
   const [isOpen,setIsOpen] = useState(false)
-  const columnInRow = 100 //1つのrowに何個column入れるか
+  const [isDown,setIsDown] = useState(false)
+  const [isDragg,setIsDragg] = useState(false)
+  const [selected,setSelected] = useState('')
+  const [editingRow,setEditingRow] = useState(-1)
+  const [selectedCell,setSelectedCell] = useState('')
+  const columnInRow = 40 //1つのrowに何個column入れるか
   //こっちで全体のcolumnを分割してrowに渡そう
   //row用のwrapper作っとこう
   const testcolumn = {
@@ -21,8 +26,14 @@ function App() {
     pull_off:false,//ここ二つをeffectで文字列で判別でもいいかも ex.effect:hammer_on
     bar:true
   }
+  const defaultColumn = {
+    fret:[null,null,null,null],
+    hammer_on:false,
+    pull_off:false,//ここ二つをeffectで文字列で判別でもいいかも ex.effect:hammer_on
+    bar:false
+  }
   const test_score = () => {
-    return Array.from({length:15},()=>({
+    return [...Array.from({length:7},()=>({
       fret:[
         Math.floor(Math.random()*21),
         Math.floor(Math.random()*21),
@@ -32,17 +43,32 @@ function App() {
       hammer_on:false,
       pull_off:false,
       bar:false
-    }))
+    })),testcolumn]
+  }
+  const createTest = () => {
+    const score = test_score()
+    const ary = new Array()
+    for(let i = 0;i < columnInRow / score.length;i++){
+      ary.push(...test_score())
+    }
+    return ary
   }
   return (
     <>
       <Modal
         IsOpen={isOpen}
         setIsOpen={setIsOpen}
+
+        defaultColumn={defaultColumn}
+        columnInRow={columnInRow}
+        
+        selectedCell={selectedCell}
+        setSelectedCell={setSelectedCell}
       />
+      {/* オブジェクトにして数減らしてみよう */}
       <div className='score-wrapper'>
         <div className='row-wrapper'>
-          <Row columns={[...test_score(),testcolumn,...test_score()]}></Row>
+          <Row columns={createTest()}></Row>
         </div>
       </div>
       <button
