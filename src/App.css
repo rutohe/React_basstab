@@ -1,3 +1,6 @@
+body,html{
+  user-select: none;
+}
 .column{
   height: 100%;
   width: 4%;
@@ -107,7 +110,7 @@
   flex-direction: row;
   justify-content: left;
   align-items: center;
-
+  position: relative;
 }
 .parts{
   max-width: 10%;
@@ -120,6 +123,21 @@
   border: 1px white solid;
   margin: 0 3%;
   color: white;
+}
+.dragcell{
+  max-width: 10%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px white solid;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }
 .open-btn,.submit-btn{
   width: 150px;
@@ -150,4 +168,13 @@
 .submit-btn:hover{  
   transform: translate(0,-2px);
   box-shadow: 1.5px 1.5px rgb(255, 255, 255,.8);
+}
+.nearest{
+  background-color: lightgreen;
+}
+.nodisplay{
+  display: none;
+}
+.selectedRow{
+  background-color: lightgreen;
 }

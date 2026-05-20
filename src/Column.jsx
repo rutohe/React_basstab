@@ -16,8 +16,8 @@ function Column({column}){
                 </div> {/*ハンマリングとかプルオフ用*/}
                 <div className="lines">
                     {column.fret.map((fret,index)=>{
-                        return <div className="string" id={index}>
-                            <p>{column.bar ? "" : fret===-1 ? "x" : fret}</p>
+                        return <div className="string" key={index}>
+                            <p >{column.bar ? "" : fret===-1 ? "x" : fret}</p>
                         </div>
                     })}
                     {column.bar && <div className="bar">{/*小節線用*/}</div>}
