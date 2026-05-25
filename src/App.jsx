@@ -68,7 +68,7 @@ function App() {
             return <div 
               className={(index === editingRow) ? 'row-wrapper selectedRow' : 'row-wrapper'}
               key={index}
-              onClick={()=>{return setEditingRow(index)}}
+              onClick={()=>{return (editingRow === index) ? setEditingRow(-1) : setEditingRow(index)}}
             >
                 <Row columns={item}></Row>
             </div>

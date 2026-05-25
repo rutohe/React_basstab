@@ -104,11 +104,11 @@ function Modal({setIsOpen,modalRow,setModalRow,dragState,selectState,position,st
                 }))
             }
         }
-        window.addEventListener('mousemove',mousemoveEvent)
-        window.addEventListener('mouseup',mouseupEvent)
+        window.addEventListener('pointermove',mousemoveEvent)
+        window.addEventListener('pointerup',mouseupEvent)
         return () => {
-                window.removeEventListener('mousemove', mousemoveEvent)
-                window.removeEventListener('mouseup', mouseupEvent)
+                window.removeEventListener('pointermove', mousemoveEvent)
+                window.removeEventListener('pointerup', mouseupEvent)
                 items.forEach(item => item.classList.remove('nearest'))
         }
         
@@ -142,7 +142,7 @@ function Modal({setIsOpen,modalRow,setModalRow,dragState,selectState,position,st
                         return <div 
                                     key={index}
                                     className="parts"
-                                    onMouseDown={(e)=>{
+                                    onPointerDown={(e)=>{
                                         selectState.setSelectedCell(item)
                                         dragState.setIsDown(true)
                                         position.current.x = e.clientX

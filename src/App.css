@@ -57,11 +57,14 @@ body,html{
   margin: auto;
   background-color: black;
 }
+.overlay .string::after{
+  background-color: white;
+}
 .string p{
   width: 40%;
   background-color: white;
   color: black;
-  font-size: .8em;
+  font-size: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +87,9 @@ body,html{
   padding-bottom: 1%;
   box-sizing: border-box;
   flex-shrink: 0;
+}
+.overlay .row-wrapper{
+  border: 1.5px solid white;
 }
 .score-wrapper{
   display: flex;
@@ -109,6 +115,7 @@ body,html{
   justify-content: space-around;
   align-items: center;
   z-index: 2;
+  touch-action: none;
 }
 .overlay .string p{
   background-color: var(--modalBgcolor);
@@ -204,4 +211,18 @@ body,html{
 }
 .selectedRow{
   background-color: lightgreen;
+}
+@media (max-width:768px){
+  .parts{
+    width: 30px;
+    height: 30px;
+  }
+  .row-wrapper{
+    height: 10vh;
+  }
+  .open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn{
+    width: 100px;
+    height: 50px;
+    font-size: .75em;
+  }
 }
