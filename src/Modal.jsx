@@ -1,12 +1,21 @@
 import { useEffect } from 'react'
 import Column from './Column'
 import Row from './Row'
-function Modal({IsOpen,setIsOpen,defaultScore,dragState,selectState,position,stringNum}) {
-    const items = [...Array.from({length:22},(_,i)=>i),'x','h','p','|']
-    const defaultRow = Array.from({length:defaultScore.columnInRow},(_,i)=>defaultScore.column)
+function Modal({setIsOpen,modalRow,setModalRow,dragState,selectState,position,stringNum,score,setScore,editingRow}) {
+    const items = [...Array.from({length:22},(_,i)=>i),'x','h','p','|','delete']
+
     useEffect(()=>{
-        if (!IsOpen || !dragState.isDown) return;
-        const items = document.querySelectorAll('.overlay .row-wrapper .string')
+        if (!dragState.isDown) return;
+        const isH = selectState.selectedCell === 'h'
+        const isP = selectState.selectedCell === 'p'
+        const isDelete = selectState.selectedCell === 'delete'
+        const effectOr = (isH || isP)
+        
+        const items = isDelete ? document.querySelectorAll('.overlay .row-wrapper .effect-area, .overlay .row-wrapper .string') : effectOr
+        ? document.querySelectorAll('.overlay .row-wrapper .effect-area') : document.querySelectorAll('.overlay .row-wrapper .string')
+        
+        if (items.length === 0) return;
+        
         const rect = items[0].getBoundingClientRect()
         const dragCell = document.querySelector('.dragcell')
         let nearestCell = -1
@@ -14,15 +23,16 @@ function Modal({IsOpen,setIsOpen,defaultScore,dragState,selectState,position,str
         const mousemoveEvent = (e)=>{
             const x = e.clientX
             const y = e.clientY
-            dragCell.style.left = `${x}px`
-            dragCell.style.top = `${y}px`
+            if (dragCell) {
+                dragCell.style.left = `${x}px`
+                dragCell.style.top = `${y}px`
+            }
             prevNearest = nearestCell
             let dest = Math.pow(x-rect.left,2) + Math.pow(y-rect.top,2)
             items.forEach((item,index)=>{
                 const eachRect = item.getBoundingClientRect()
                 const eachDest = Math.pow(eachRect.x - x,2)+Math.pow(eachRect.y - y,2)
                 if(dest > eachDest){
-                    // destが遠いと反応しない感じでもいいかもしれない
                     dest = eachDest
                     nearestCell = index
                 }
@@ -35,35 +45,89 @@ function Modal({IsOpen,setIsOpen,defaultScore,dragState,selectState,position,str
             }
         }
         const mouseupEvent = () => {
+            const currentPart = selectState.selectedCell;
+            const isBar = currentPart === '|'
             selectState.setSelectedCell('')
             dragState.setIsDown(false)
-            const col = Math.floor(nearestCell/stringNum)
-            const cell = nearestCell % stringNum
+            if (nearestCell === -1) return;
+            if(effectOr){
+                setModalRow(modalRow.map((item,index)=>{
+                    if (nearestCell !== index) return item
+                    return {
+                        ...item,
+                        hammer_on: isH,
+                        pull_off: isP
+                    }
+                }))
+            }
+            else if(isDelete){
+                const totalElementsInCol = stringNum + 1;
+                const col = Math.floor(nearestCell / totalElementsInCol);
+                const isEf = (nearestCell % totalElementsInCol) === 0;
 
+                setModalRow(modalRow.map((item,index)=>{
+                    if (index !== col) return item;
+                    
+                    if (isEf) {
+                        return { ...item, hammer_on: false, pull_off: false };
+                    } else {
+                        const cell = (nearestCell % totalElementsInCol) - 1;
+                        return {
+                            ...item,
+                            bar:false,
+                            fret: item.fret.map((it, idx) => {
+                                return (cell === idx) ? null : it;
+                            })
+                        };
+                    }
+                }))
+            }
+            else if(isBar){
+                const col = Math.floor(nearestCell / stringNum);
+
+                setModalRow(modalRow.map((item, index) => {
+                    if (col !== index) return item;
+                    
+                    return {
+                        ...item,
+                        fret: item.fret.map(()=>{return false}),
+                        bar: item.bar ? false : true 
+                    }
+                }))
+            }
+            else{
+                const col = Math.floor(nearestCell/stringNum)
+                const cell = nearestCell % stringNum
+                setModalRow(modalRow.map((item,index)=>{
+                    return (col === index) ? 
+                    {...item,bar:false,fret:item.fret.map((it,idx)=>{return (cell === idx) ? (isDelete) ? null : currentPart : it})} : item
+                }))
+            }
         }
         window.addEventListener('mousemove',mousemoveEvent)
         window.addEventListener('mouseup',mouseupEvent)
         return () => {
                 window.removeEventListener('mousemove', mousemoveEvent)
-                window.removeEventListener('mousemove', mouseupEvent)
+                window.removeEventListener('mouseup', mouseupEvent)
                 items.forEach(item => item.classList.remove('nearest'))
         }
         
-    },[IsOpen, dragState.isDown])
+    }, [dragState.isDown, modalRow])
     return (
     <>
-        {IsOpen && <div 
+        <div 
                 className="overlay"
                 onClick={()=>{
                     if(!dragState.isDown && !dragState.mouseup){
                         setIsOpen(false)
+                        setModalRow([])
                     }
                     dragState.setMouseup(false)
                 }}
             >
             <div className='row-wrapper'>
                 <Row 
-                    columns={defaultRow}
+                    columns={modalRow}
                     onClick={(e)=>{e.stopPropagation()}}
                 >
 
@@ -97,12 +161,15 @@ function Modal({IsOpen,setIsOpen,defaultScore,dragState,selectState,position,str
                     className="submit-btn"
                     onClick={()=>{
                         setIsOpen(false)
-
+                        setScore(score.map((item,index)=>{
+                            return (index === editingRow) ? modalRow : item
+                        }))
+                        setModalRow([])
                     }}
                 >
                     submit this score
                 </button>
-        </div>}
+        </div>
     </>
   )
     
