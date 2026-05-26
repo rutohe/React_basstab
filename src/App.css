@@ -6,6 +6,114 @@ body,html{
   --selectBgcolor: lightgreen;
 
 }
+.hero-area{
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.explain-area{
+  margin: auto;
+  padding: 2%;
+  border: 1px black solid;
+  border-radius: 10px;
+  width: 70%;
+  height: 40%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5em;
+  color: black;
+}
+.hero-btn{
+  width: 40%;
+  height: 10%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.form-wrapper{
+  height: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  border: 1px solid black;
+  border-radius: 999px;
+  padding: 1%;
+  background-color: #204c97;
+  transition: all .3s;
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-wrapper:hover {
+  background-color: #2a64c5;
+  cursor: pointer;          
+  transform: translate(0, -5px);
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.4);
+}
+.form-link{
+  text-decoration: none;
+  color: white;
+}
+.input-wrapper{
+  flex-grow: 1;
+  height: 60%;
+  width: 30%;
+  box-sizing: border-box;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input-wrapper input{
+  background-color: transparent;
+  border: none;
+  width: 90%;
+  height: 90%;
+}
+.input-wrapper input:focus{
+  outline: none;
+}
+.id-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  box-sizing: border-box;
+  width: 50%;
+  height: 10%;
+  gap: 1%;
+}
+.loading-area{
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.idload-btn{
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 999px;
+  font-size: .8em;
+  height: 100%;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .column{
   height: 100%;
   width: 4%;
@@ -176,7 +284,7 @@ body,html{
   justify-content: space-around;
   align-items: center;
 }
-.open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn{
+.open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn,.reload-btn,.loading-btn,.create-btn{
   width: 150px;
   height: 70px;
   background-color: transparent;
@@ -185,7 +293,7 @@ body,html{
   font-size: 1.05em;
   box-sizing: border-box;
 }
-.open-btn,.delete-btn,.insert-btn,.keep-btn{
+.open-btn,.delete-btn,.insert-btn,.keep-btn,.reload-btn,.loading-btn,.create-btn{
   transform: translate(0,-5px);
   box-shadow: 3px 3px rgb(0, 0, 0,.5);
 }
@@ -195,7 +303,7 @@ body,html{
   box-shadow: 3px 3px rgb(255, 255, 255,.5);
   transform: translate(0,-5px);
 }
-.open-btn:hover,.delete-btn:hover,.insert-btn:hover,.keep-btn:hover{
+.open-btn:hover,.delete-btn:hover,.insert-btn:hover,.keep-btn:hover,.reload-btn:hover,.loading-btn:hover,.create-btn:hover{
   transform: translate(0,-2px);
   box-shadow: 1.5px 1.5px rgb(0, 0, 0,.8);
 }
@@ -220,7 +328,7 @@ body,html{
   .row-wrapper{
     height: 10vh;
   }
-  .open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn{
+  .open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn,.reload-btn,.loading-btn,.create-btn{
     width: 100px;
     height: 50px;
     font-size: .75em;

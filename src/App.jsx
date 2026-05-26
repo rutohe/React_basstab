@@ -20,6 +20,9 @@ function App() {
   const [editingRow,setEditingRow] = useState(-1)
   const [selectedCell,setSelectedCell] = useState('')
   const [modalRow,setModalRow] = useState([])
+  const [showCreate,setShowCreate] = useState(true)
+  const [showLoding,setShowLoding] = useState(false)
+  const [inputId,setInputId] = useState('aiueo')
   const columnInRow = 40 //1つのrowに何個column入れるか
   //こっちで全体のcolumnを分割してrowに渡そう
   //row用のwrapper作っとこう
@@ -37,6 +40,7 @@ function App() {
   }
   
   const [score, setScore] = useState([createNewRow()])
+  const [idScore,setIdScore] = useState([createNewRow()])
   const dragState ={
     isDown:isDown,
     setIsDown:setIsDown,
@@ -49,6 +53,50 @@ function App() {
   }
   return (
     <>
+      <div className='hero-area'>
+        <div className='explain-area'>
+          Reactを使って開発した、ブラウザ上で直感的にベースのタブ譜を作成・編集できるWebアプリケーションです。<br/>
+          細かい譜面の書き方を知らない＆現状実装が技術的に困難な部分も多いため、
+          リズム等が頭に入っている状態で運指の練習用に活用してください。
+        </div>
+        {/* フォームのリンク */}
+        <div className='form-wrapper'>
+          <a href="" className='form-link'>ご意見はこちらへ</a>
+        </div>
+        <div className='hero-btn'>  
+          <button
+            type='button'
+            className='create-btn'
+            onClick={()=>{
+              setShowCreate(true)
+              setShowLoding(false)
+              setTimeout(()=>{
+                window.scrollTo({
+                  top: window.innerHeight,
+                  behavior: 'smooth' // 💡 これを足すと、一瞬でワープせず「するする〜」と滑らかにスクロールします！
+                })  
+              } ,10)
+            }}
+          >
+            create score!
+          </button>
+          <button
+            type='button'
+            className='loading-btn'
+            onClick={()=>{
+              setShowCreate(false)
+              setShowLoding(true)
+              setTimeout(()=>{
+                window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth' // 💡 これを足すと、一瞬でワープせず「するする〜」と滑らかにスクロールします！
+              })},100) 
+            }}
+          >
+            loding score!
+          </button>
+        </div>
+      </div>
       {isOpen && <Modal
         setIsOpen={setIsOpen}
         modalRow={modalRow}
@@ -63,90 +111,157 @@ function App() {
         editingRow={editingRow}
       />}
       {/* オブジェクトにして数減らしてみよう */}
-      <div className='score-wrapper'>
-         {score.map((item,index)=>{
-            return <div 
-              className={(index === editingRow) ? 'row-wrapper selectedRow' : 'row-wrapper'}
-              key={index}
-              onClick={()=>{return (editingRow === index) ? setEditingRow(-1) : setEditingRow(index)}}
-            >
-                <Row columns={item}></Row>
-            </div>
-          })}
-      </div>
-      <div className="btn-wrapper">
-        <button
-          type='button'
-          className='open-btn'
-          onClick={()=>{
-            if(editingRow === -1){
-              alert('編集行を選択してください。')
-              return
-            }
-            setModalRow(score[editingRow].map((item,index)=>{
-              return {
-                ...item,
-                fret:[...item.fret]
+      {showCreate && <div className='create-area'>
+        <div className='score-wrapper'>
+          {score.map((item,index)=>{
+              return <div 
+                className={(index === editingRow) ? 'row-wrapper selectedRow' : 'row-wrapper'}
+                key={index}
+                onClick={()=>{return (editingRow === index) ? setEditingRow(-1) : setEditingRow(index)}}
+              >
+                  <Row columns={item}></Row>
+              </div>
+            })}
+        </div>
+        <div className="btn-wrapper">
+          <button
+            type='button'
+            className='open-btn'
+            onClick={()=>{
+              if(editingRow === -1){
+                alert('編集行を選択してください。')
+                return
               }
-            }))
-            setIsOpen(true)
-          }}
-        >
-          edit this row
-        </button>
-        {/* insert rowのボタンも作る */}
-        <button
-          type='button'
-          className='insert-btn'
-          onClick={()=>{
-            const next = (editingRow === -1) ? score.length : editingRow+1
-            const ary = [...score]
-            ary.splice(next, 0,createNewRow())
-            setScore(ary)
-            setEditingRow(next)
-          }}
-        >
-          insert row
-        </button>
-        <button
-          type='button'
-          className='delete-btn'
-          onClick={()=>{
-            setScore(score.filter((item,index)=>{
-              return index !== editingRow
-            }))
-            setEditingRow((editingRow === score.length-1) ? editingRow-1 : editingRow)
-          }}
-        >
-          delete row
-        </button>
-        <button
-          type='button'
-          className='keep-btn'
-          onClick={()=>{
-            const obj = JSON.stringify({score:score})
-            localStorage.setItem("score",obj)
-            alert("ローカルストレージに譜面を保存しました。")
-          }}
-        >
-          keep this score
-        </button>
-        <button
-          type='button'
-          onClick={()=>{
-            const saveData = localStorage.getItem("score")
-            if(saveData){
-              const parsed = JSON.parse(saveData)
-              setScore(parsed.score)
-              return
-            }
-            alert('保存された譜面がありません。白紙の譜面を作成します')
-            setScore([createNewRow()])
-          }}
-        >
-          reload latest score
-        </button>
-      </div>
+              setModalRow(score[editingRow].map((item,index)=>{
+                return {
+                  ...item,
+                  fret:[...item.fret]
+                }
+              }))
+              setIsOpen(true)
+            }}
+          >
+            edit this row
+          </button>
+          {/* insert rowのボタンも作る */}
+          <button
+            type='button'
+            className='insert-btn'
+            onClick={()=>{
+              const next = (editingRow === -1) ? score.length : editingRow+1
+              const ary = [...score]
+              ary.splice(next, 0,createNewRow())
+              setScore(ary)
+              setEditingRow(next)
+            }}
+          >
+            insert row
+          </button>
+          <button
+            type='button'
+            className='delete-btn'
+            onClick={()=>{
+              if(editingRow === -1){
+                alert('削除する行を選択してください')
+                return
+              }
+              setScore(score.filter((item,index)=>{
+                return index !== editingRow
+              }))
+              setEditingRow((editingRow === score.length-1) ? editingRow-1 : editingRow)
+            }}
+          >
+            delete row
+          </button>
+          <button
+            type='button'
+            className='keep-btn'
+            onClick={()=>{
+              const obj = JSON.stringify({score:score})
+              localStorage.setItem("score",obj)
+              alert("ローカルストレージに譜面を保存しました。")
+            }}
+          >
+            keep this score
+          </button>
+          <button
+            type='button'
+            className='reload-btn'
+            onClick={()=>{
+              confirm('保存された譜面で現在の譜面を上書きします。よろしいですか？')
+              const saveData = localStorage.getItem("score")
+              if(saveData){
+                const parsed = JSON.parse(saveData)
+                setScore(parsed.score)
+                return
+              }
+              alert('保存された譜面がありません。白紙の譜面を作成します')
+              setScore([createNewRow()])
+            }}
+          >
+            reload latest score
+          </button>
+          <button
+            type='button'
+            className='upload-btn'
+            onClick={async()=>{
+              const obj = JSON.stringify({score:score})
+              try{
+                const res = await fetch('url',{
+                  method: "POST",
+                  headers:{
+                    "Content-Type" : "application/json",
+                  },
+                  body:obj
+                })
+                if(res.ok){
+                  throw new Error("サーバー側でエラーが発生しました")
+                }
+                const result = await res.json()
+                alert(`あなたの譜面IDは${result.id}です。この値を保存してください`)
+              }catch(error){
+                console.log(error)
+                alert("サーバーとの通信に失敗しました。")
+              }
+            }}
+          >
+            upload this score
+          </button>
+        </div>
+      </div>}
+      {showLoding && <div className='loading-area'>
+        <div className='id-wrapper'>
+          <div className='input-wrapper'>
+            <input 
+              type="text"
+              placeholder='input score ID'
+              onChange={(e)=>{
+                setInputId(e.target.value)
+              }}
+            />
+          </div>
+          
+          <button
+            type='button'
+            className='idload-btn'
+            onClick={async()=>{
+
+            }}
+          >
+            {`${inputId}の譜面を入手します。`}
+          </button>
+        </div>
+                <div className='score-wrapper'>
+          {idScore.map((item,index)=>{
+              return <div 
+                className='row-wrapper'
+                key={index}
+              >
+                  <Row columns={item}></Row>
+              </div>
+            })}
+        </div>
+      </div>}
     </>
   )
 }
