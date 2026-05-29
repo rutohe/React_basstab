@@ -159,7 +159,7 @@ function App() {
                 setIsOpen(true)
               }}
             >
-              edit this row
+              行を編集
             </button>
             {/* insert rowのボタンも作る */}
             <button
