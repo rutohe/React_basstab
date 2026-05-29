@@ -271,6 +271,7 @@ body,html{
 .parts{
   max-width: 10%;
   width: 50px;
+  max-height: 25%;
   height: 50px;
   display: flex;
   align-items: center;
