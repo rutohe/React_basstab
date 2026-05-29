@@ -23,6 +23,7 @@ body,html{
   width: 70%;
   height: 40%;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   font-size: 1.5em;
@@ -246,7 +247,7 @@ body,html{
 }
 .modal-content{
   width: 80vw;
-  height: 30vh;
+  height: 40vh;
   border: white 1px solid;
   display: flex;
   flex-wrap: wrap;
@@ -254,6 +255,7 @@ body,html{
   justify-content: left;
   align-items: center;
   position: relative;
+  box-sizing: border-box;
 }
 .idmodal-content{
   padding: 5% 0;
@@ -345,6 +347,9 @@ body,html{
 .selectedRow{
   background-color: lightgreen;
 }
+.note{
+  color: red;
+}
 @media (max-width:768px){
   .parts{
     width: 30px;
@@ -357,5 +362,11 @@ body,html{
     width: 100px;
     height: 50px;
     font-size: .75em;
+  }
+  .string p{
+    font-size: 1em;
+  }
+  .row-wrapper{
+    height: 20vh;
   }
 }

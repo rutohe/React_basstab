@@ -57,13 +57,23 @@ function App() {
     <>
       <div className='hero-area'>
         <div className='explain-area'>
-          Reactを使って開発した、ブラウザ上で直感的にベースのタブ譜を作成・編集できるWebアプリケーションです。<br/>
-          細かい譜面の書き方を知らない＆現状実装が技術的に困難な部分も多いため、
-          リズム等が頭に入っている状態で運指の練習用に活用してください。
+          <p>
+            Reactを使って開発した、ブラウザ上で直感的にベースのタブ譜を作成・編集できるWebアプリケーションです。<br/>
+            細かい譜面の書き方を知らない＆現状実装が技術的に困難な部分も多いため、
+            リズム等が頭に入っている状態で運指の練習用に活用してください。<br />
+          </p>
+          <p className='note'>※スマートフォンで使用する場合横画面で使用してください。</p>
         </div>
         {/* フォームのリンク */}
         <div className='form-wrapper'>
-          <a href="" className='form-link'>ご意見はこちらへ</a>
+          <a 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSep7f0JgzIMA8gSsLTyj_r-tvIzWQTH7RxIHNxp7jsXBcaLFA/viewform?usp=header" 
+            className='form-link'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            ご意見はこちらへ
+          </a>
         </div>
         <div className='herobtn-area'>  
           <button
