@@ -9,13 +9,14 @@ body,html{
 .hero-area{
   height: 100vh;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
 .explain-area{
-  margin: auto;
+  margin:0 auto;
   padding: 2%;
   border: 1px black solid;
   border-radius: 10px;
@@ -27,10 +28,10 @@ body,html{
   font-size: 1.5em;
   color: black;
 }
-.hero-btn{
+.herobtn-area{
   width: 40%;
   height: 10%;
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -64,9 +65,9 @@ body,html{
   color: white;
 }
 .input-wrapper{
-  flex-grow: 1;
-  height: 60%;
-  width: 30%;
+  flex-grow: 0;
+  height: 30%;
+  width: 80%;
   box-sizing: border-box;
   background-color: white;
   border: 1px solid black;
@@ -79,7 +80,11 @@ body,html{
   background-color: transparent;
   border: none;
   width: 90%;
-  height: 90%;
+  height: 100%;
+}
+.input-wrapper:focus-within {
+  border-color: transparent;
+  box-shadow: 3px 3px 10px rgba(42, 100, 197, 0.5);
 }
 .input-wrapper input:focus{
   outline: none;
@@ -105,11 +110,12 @@ body,html{
 }
 .idload-btn{
   background-color: transparent;
-  border: 1px solid black;
+  border: 1px solid white;
+  color: white;
   border-radius: 999px;
   font-size: .8em;
-  height: 100%;
-  width: 30%;
+  height: 30%;
+  width: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,6 +255,17 @@ body,html{
   align-items: center;
   position: relative;
 }
+.idmodal-content{
+  padding: 5% 0;
+  width: 80vw;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px white solid;
+  border-radius: 99px;
+}
 .parts{
   max-width: 10%;
   width: 50px;
@@ -277,14 +294,22 @@ body,html{
   pointer-events: none;
 }
 .btn-wrapper{
-  width: 70%;
-  margin: 2% auto;
+  width: 40%;
+  margin: 2% auto 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  gap: 10px;
 }
-.open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn,.reload-btn,.loading-btn,.create-btn{
+.btn-row{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.create-btn,.submit-btn,.hero-btn{
   width: 150px;
   height: 70px;
   background-color: transparent;
@@ -293,7 +318,7 @@ body,html{
   font-size: 1.05em;
   box-sizing: border-box;
 }
-.open-btn,.delete-btn,.insert-btn,.keep-btn,.reload-btn,.loading-btn,.create-btn{
+.create-btn,.hero-btn{
   transform: translate(0,-5px);
   box-shadow: 3px 3px rgb(0, 0, 0,.5);
 }
@@ -303,7 +328,7 @@ body,html{
   box-shadow: 3px 3px rgb(255, 255, 255,.5);
   transform: translate(0,-5px);
 }
-.open-btn:hover,.delete-btn:hover,.insert-btn:hover,.keep-btn:hover,.reload-btn:hover,.loading-btn:hover,.create-btn:hover{
+.create-btn:hover,.hero-btn:hover{
   transform: translate(0,-2px);
   box-shadow: 1.5px 1.5px rgb(0, 0, 0,.8);
 }
@@ -328,7 +353,7 @@ body,html{
   .row-wrapper{
     height: 10vh;
   }
-  .open-btn,.delete-btn,.insert-btn,.submit-btn,.keep-btn,.reload-btn,.loading-btn,.create-btn{
+  .create-btn,.hero-btn{
     width: 100px;
     height: 50px;
     font-size: .75em;
