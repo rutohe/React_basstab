@@ -61,6 +61,7 @@ function App() {
             Reactを使って開発した、ブラウザ上で直感的にベースのタブ譜を作成・編集できるWebアプリケーションです。<br/>
             細かい譜面の書き方を知らない＆現状実装が技術的に困難な部分も多いため、
             リズム等が頭に入っている状態で運指の練習用に活用してください。<br />
+            現在はフロントの実装しかできていないので譜面の作成しかできません。
           </p>
           <p className='note'>※スマートフォンで使用する場合横画面で使用してください。</p>
         </div>
@@ -90,18 +91,19 @@ function App() {
               } ,10)
             }}
           >
-            create score!
+            譜面を作成
           </button>
           <button
             type='button'
-            className='hero-btn'
+            className='hero-btn not-yet'
+            disabled='true'
             onClick={()=>{
               setShowCreate(false)
               setShowLoding(true)
               setIdModal(true)
             }}
           >
-            loding score!
+            譜面を入手
           </button>
         </div>
       </div>
@@ -171,7 +173,7 @@ function App() {
                 setEditingRow(next)
               }}
             >
-              insert row
+              行を挿入
             </button>
             <button
               type='button'
@@ -187,7 +189,7 @@ function App() {
                 setEditingRow((editingRow === score.length-1) ? editingRow-1 : editingRow)
               }}
             >
-              delete row
+              行を削除
             </button>
           </div>
           <div className='btn-row'>
@@ -200,7 +202,7 @@ function App() {
                 alert("ローカルストレージに譜面を保存しました。")
               }}
             >
-              keep this score
+              譜面を保存
             </button>
             <button
               type='button'
@@ -217,11 +219,12 @@ function App() {
                 setScore([createNewRow()])
               }}
             >
-              reload latest score
+              保存した譜面
             </button>
             <button
               type='button'
-              className='create-btn'
+              className='create-btn not-yet'
+              disabled='true'
               onClick={async()=>{
                 const obj = JSON.stringify({score:score})
                 try{
@@ -243,7 +246,7 @@ function App() {
                 }
               }}
             >
-              upload this score
+              譜面をアップロード
             </button>
           </div>
         </div>
