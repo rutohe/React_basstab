@@ -22,7 +22,7 @@ function Modal({setIsOpen,modalRow,setModalRow,dragState,selectState,position,st
         let prevNearest = -1
         const mousemoveEvent = (e)=>{
             const x = e.clientX
-            const y = e.clientY
+            const y = (e.pointerType === 'touch') ? e.clientY - 50 : e.clientY
             if (dragCell) {
                 dragCell.style.left = `${x}px`
                 dragCell.style.top = `${y}px`

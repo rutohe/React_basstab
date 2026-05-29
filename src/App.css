@@ -197,7 +197,7 @@ body,html{
   justify-content: left;
   align-items: start;
   border: 1.5px black solid;
-  height: 20vh;
+  height: 25vh;
   width: 100%;
   padding-bottom: 1%;
   box-sizing: border-box;
@@ -350,17 +350,15 @@ body,html{
 }
 .note{
   color: red;
+
 }
 .not-yet{
   background-color: rgb(0, 0, 0,.5);
 }
 @media (max-width:768px){
-  .parts{
+  .parts,.dragcell{
     width: 30px;
     height: 30px;
-  }
-  .row-wrapper{
-    height: 10vh;
   }
   .create-btn,.hero-btn{
     width: 100px;
@@ -368,9 +366,9 @@ body,html{
     font-size: .75em;
   }
   .string p{
-    font-size: 1em;
+    font-size: 10px;
   }
-  .row-wrapper{
-    height: 20vh;
+  .explain-area{
+    font-size: .9em;
   }
 }
