@@ -1,4 +1,4 @@
-function Idmodal({idModal,setIdModal,inputId,setInputId,setScore}){
+function Idmodal({idModal,setIdModal,inputId,setInputId,setIdScore}){
     return(
         <div 
             className="overlay"
@@ -39,7 +39,7 @@ function Idmodal({idModal,setIdModal,inputId,setInputId,setScore}){
                             throw new Error("サーバー側でエラーが発生しました")
                         }
                         const result = await res.json()
-                        setScore(result.score)
+                        setIdScore(result.score)
                         setIdModal(false)
                         setInputId('')
                         setTimeout(()=>{
