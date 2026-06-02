@@ -369,6 +369,9 @@ body,html{
   .string p{
     font-size: 10px;
   }
+  .effect-area{
+    font-size: 10px;
+  }
   .explain-area{
     font-size: .9em;
   }
@@ -381,6 +384,5 @@ body,html{
   }
   .btn-wrapper{
     width: 60%;
-
   }
 }
