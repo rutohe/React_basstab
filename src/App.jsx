@@ -7,7 +7,7 @@ import Column from './Column'
 import Modal from './Modal'
 import Row from './Row'
 import Idmodal from './Idmodal'
-
+// 
 function App() {
   // 弦の本数
   const stringNum = 4
