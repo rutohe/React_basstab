@@ -199,6 +199,7 @@ function App() {
               type='button'
               className='create-btn'
               onClick={()=>{
+                confirm("既存のデータがある場合上書きされますがよろしいですか？")
                 const obj = JSON.stringify({score:score})
                 localStorage.setItem("score",obj)
                 alert("ローカルストレージに譜面を保存しました。")
